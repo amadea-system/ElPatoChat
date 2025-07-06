@@ -4,5 +4,11 @@ node_modules
 # ----- #
 *.code-workspace
 extensions.json
+extensions.json
 
-.yarnrc.yml
+front/yarn
+back/.yarn/
+front/.yarn/
+front/.vscode/extensions.json
+
+.pnp.*
