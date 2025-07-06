@@ -36,9 +36,12 @@ const App = () => {
 
   const selectedTheme = getTheme(userTheme);
 
+  const overrideOBSCheck = useConfiguration(state => state.fakeOBS);
+  const treatAsOBS = isObs() || overrideOBSCheck;
+
   useEffect(() => {
     const load = async () => {
-      if (!isObs()) return;
+      if (!treatAsOBS) return;
 
       const resp = await elPatoApi.getUserDetails(channelName);
       if (resp.data) {
@@ -53,14 +56,14 @@ const App = () => {
     };
 
     load();
-  }, [channelName]);
+  }, [channelName, treatAsOBS]);
 
   return (
     <ThemeProvider theme={selectedTheme}>
       <GlobalStyle/>
       { error && (<h1>{error}</h1>) }
-      { channel && isObs() && (<ChatOverlay userInformation={channel} />) }
-      { !isObs() && ( <HomePage /> ) }
+      { channel && treatAsOBS && (<ChatOverlay userInformation={channel} />) }
+      { !treatAsOBS && ( <HomePage /> ) }
     </ThemeProvider>
   );
 };

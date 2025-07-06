@@ -57,7 +57,8 @@ export interface UserConfiguration {
     value: string
   }>
   ttsConfiguration: TTSConfiguration,
-  chatTheme?: string
+  chatTheme?: string,
+  fakeOBS?: boolean,
 }
 
 export interface TTSMessage {
