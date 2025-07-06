@@ -7,15 +7,26 @@ export type ChatMsgContentProps = {
   userColor: string | undefined
 }
 
-const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentProps) => (
-  messageParts.map(({ content, type, customEmote }, index) => {
+const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentProps) => {
+  if (messageParts.length === 0) return null;
+
+  // const firstPart: MessagePart = messageParts[0];
+  // const remainingParts = messageParts.slice(1);
+  const parentTypes = ['reply', 'redeption'];
+  const parentPart = messageParts.find(part => parentTypes.includes(part.type));
+  const firstPart = parentPart ?? messageParts[0];
+  const remainingParts = parentPart ? messageParts.filter(part => part !== parentPart) : messageParts.slice(1);
+
+  const renderPart = ({ content, type, customEmote }: MessagePart, index: number) => {
     switch (type) {
     case 'emote':
       return <Emote
         key={index}
         id={content}
         customEmote={customEmote} 
-        scale={messageParts.length === 1 ? 3 : 1}
+        // scale={messageParts.length === 1 ? 3 : 1}
+        // scale={((firstPart.type === 'reply' && messageParts.length === 2) || messageParts.length === 1) ? 3 : 1}
+        scale={((parentTypes.includes(firstPart.type) && messageParts.length === 2) || messageParts.length === 1) ? 3 : 1}
         alignCorrection={
           messageParts.filter(p => p.type === 'reply').length > 1
         }
@@ -27,9 +38,34 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
     case 'mention':
       return <S.ContentExtras $userColor={userColor} key={index}>{ content }</S.ContentExtras>;
     default:
-      return <span key={index}>{content}</span>;
+      return <span key={index}>{ content }</span>;
     }
-  })
-);
+  };
+
+  return (
+    <>
+      {parentTypes.includes(firstPart.type) && remainingParts.length > 0 && (
+        <>
+          {renderPart(firstPart as MessagePart, 0)}
+          <div>
+            {remainingParts.map((part, idx) =>
+              renderPart(part, idx + 1)
+            )}
+          </div>
+        </>
+      )}
+
+      {!parentTypes.includes(firstPart.type) &&
+        <div>
+          {renderPart(firstPart as MessagePart, 0)}
+          {remainingParts.map((part, idx) =>
+            renderPart(part, idx)
+          )}
+        </div>
+      }
+    </>
+  );
+
+};
 
 export default ChatMsgContent;

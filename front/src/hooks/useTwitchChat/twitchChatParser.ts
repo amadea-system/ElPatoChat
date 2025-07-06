@@ -32,7 +32,7 @@ const parseExtras = (messageParts: Array<MessagePart>, twurpleMsg: TwurpleChatMe
       .find((item) => item.type === 'mention');
     if (firstMention) {
       let parentMsg = twurpleMsg.parentMessageText?.replace(/@.*?(?=\s|@|$)/, '') ?? '';
-      parentMsg = parentMsg.length > 5 ? parentMsg.slice(0, 5) + '...' : parentMsg;
+      parentMsg = parentMsg.length > 10 ? parentMsg.slice(0, 10) + '...' : parentMsg;
 
       firstMention.type = 'reply';
       firstMention.content = `
@@ -49,6 +49,8 @@ const parseExtras = (messageParts: Array<MessagePart>, twurpleMsg: TwurpleChatMe
     } satisfies MessagePart];
   }
 
+  console.log('Parsed Message Parts:');
+  console.log(newParts);
   return newParts;
 };
 

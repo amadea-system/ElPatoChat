@@ -27,6 +27,9 @@ export const Content = styled.div<{
   align-items: center;
   gap: 0.3ch;
 
+  flex-direction: column;
+  align-items: end;
+
   background-color: ${(props) => props.theme.chat.content.bg};
   color: ${(props) => props.theme.chat.content.text};
   border-radius: ${(props) => props.theme.chat.content.borderRadius};
