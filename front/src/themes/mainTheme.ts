@@ -219,4 +219,27 @@ const pinkTheme:DefaultTheme = {
   }
 };
 
-export { theme1, theme2, theme3, pinkTheme, floating };
+const hibikiThemeAlpha1: DefaultTheme = {
+  ...theme2,
+  chat: {
+    ...theme2.chat,
+    header: {
+      ...theme2.chat.header,
+      bg: '#ffb7f2',
+    },
+    content: {
+      ...theme2.chat.content,
+      bg: '#fff2f2',
+      reward: {
+        ...theme2.chat.content.reward,
+        bg: '#b5cef7',
+      },
+      reply: {
+        ...theme2.chat.content.reply,
+        bg: '#D6B8FF',
+      }
+    },
+  }
+};    
+
+export { theme1, theme2, theme3, pinkTheme, floating, hibikiThemeAlpha1 };

@@ -1,7 +1,9 @@
 import { ApiResponse } from '../ApiResponse';
 import { Badge, CustomEmote, UserInformation } from './types';
 
-const BASE_URL = 'https://api.niv3kelpato.com/api/';
+// TODO: Move to an environment variable
+// const BASE_URL = 'https://api.niv3kelpato.com/api/';
+const BASE_URL = 'http://localhost:6042/';
 
 const getEmotes = async (channelId: string, 
   isBetterTTVEnabled: boolean,
