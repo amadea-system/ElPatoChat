@@ -1,9 +1,13 @@
 import styled, { css } from 'styled-components';
 import { THEME_USER_COLOR } from '../../../themes/mainTheme';
 
-export const Container = styled.div<{ $userColor: string }>`
-  margin-right: 8px;
+export const Container = styled.div<{ $userColor: string, $direction: 'left' | 'right' }>`
   margin-bottom: -8px;
+
+  ${({ $direction }) => $direction === 'right' ?
+    css` margin-right: 8px; ` :
+    css` margin-left: 8px; 
+  `}
 
   display: flex;
   align-items: center;
