@@ -51,5 +51,6 @@ export const defaultUserConfiguration: UserConfiguration = {
   frankerFaceEnabled: true,
   sevenTVEnabled: true,
   isTTSEnabled: true,
-  ttsConfiguration: ttsDefaultConfig
+  ttsConfiguration: ttsDefaultConfig,
+  pauseSampleMessages: false,
 };

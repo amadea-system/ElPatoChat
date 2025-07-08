@@ -9,16 +9,18 @@ import { SampleMessages } from '../../../examples/sampleMessages';
 
 
 export interface ChatSectionProps {
-  channelInformation?: UserInformation | null
+  channelInformation?: UserInformation | null,
+  sampleMessagesPaused?: boolean
 }
 
-export const ChatSection = ({ channelInformation }: ChatSectionProps) => {
+export const ChatSection = ({ channelInformation, sampleMessagesPaused }: ChatSectionProps) => {
   const [messages, setMessages] = useState<Array<ChatMessageData>>([]);
 
   useEffect(() => {
     if (channelInformation) return;
 
     const onInterval = () => {
+      if (sampleMessagesPaused) return;
       setMessages((prevMessages) => (
         [
           { ...pickRandom(SampleMessages), id: `${Math.random()}` },
@@ -29,7 +31,7 @@ export const ChatSection = ({ channelInformation }: ChatSectionProps) => {
     const intervalRef = setInterval(onInterval, 1000);
 
     return () => { clearInterval(intervalRef); };
-  }, [channelInformation]);
+  }, [channelInformation, sampleMessagesPaused]);
 
   return (
     <S.ChatContainer>

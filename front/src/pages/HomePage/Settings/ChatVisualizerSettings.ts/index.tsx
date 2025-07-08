@@ -66,6 +66,28 @@ export const ChatVisualizerSettings = () => {
         </div>
       </div>
 
+      <h3 className='my-2'>Visualizer (No effect in OBS)</h3>
+
+      <div className='mb-2 flex gap-1 items-center'>
+        <button 
+          id='config-checkbox-pause-sample-msgs' 
+          type='button'
+          aria-labelledby='config-checkbox-pause-sample-msgs-label'
+          aria-checked={configuration.pauseSampleMessages}
+          role='checkbox' 
+          className='flex items-center' 
+          onClick={() => updateUserConfiguration({ pauseSampleMessages : !configuration.pauseSampleMessages })}
+        >
+          {configuration.pauseSampleMessages ?
+            <span className="icon-[mingcute--toggle-right-fill] text-[2em]" role="img" aria-hidden="true" />
+            :
+            <span className="icon-[mingcute--toggle-left-line] text-[2em]" role="img" aria-hidden="true" />
+          }
+        </button>
+
+        <label id='config-checkbox-pause-sample-msgs-label' htmlFor='config-checkbox-pause-sample-msgs'>Pause Sample Messages</label>
+      </div>
+
       <div className='flex gap-2 flex-col mt-2'>
         <label 
           htmlFor='config-chat-theme-select'

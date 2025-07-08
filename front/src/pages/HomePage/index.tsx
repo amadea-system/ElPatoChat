@@ -22,6 +22,8 @@ const HomePage = () => {
   const [channel, setChannel] = useState<string>(channelName);
   const debouncedChannel = useDebounce(channel, 500);
 
+  const sampleMessagesPaused = useConfiguration(state => state.pauseSampleMessages);
+
   useEffect(() => {
     const getUserDetails = async () => {
       const user = await elPatoApi.getUserDetails(debouncedChannel);
@@ -38,7 +40,7 @@ const HomePage = () => {
 
       <S.GlobalStyles />
 
-      <ChatSection channelInformation={channelDetails} />
+      <ChatSection channelInformation={channelDetails} sampleMessagesPaused={sampleMessagesPaused} />
 
       <S.SettingsContainer>
 
