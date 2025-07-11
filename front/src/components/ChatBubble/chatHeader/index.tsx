@@ -1,18 +1,34 @@
 import { ChatMessageData } from '../../../types';
 import * as S from './styles';
+import { useTheme } from 'styled-components';
 
-const ChatMsgHeader = ({ badges, displayPronoun, color, userDisplayName }: ChatMessageData) => (
-  <S.Container $userColor={color || 'black'}>
-    { badges.map((badge) => (
-      <S.Badge height={18} width={18} src={badge.url} key={badge.id} alt={badge.id} />
-    ))}
+interface ChatMsgHeaderProps extends ChatMessageData {
+  direction: 'left' | 'right';
+}
 
-    { displayPronoun && (
-      <S.Pronouns>({ displayPronoun })</S.Pronouns>
-    )}
+const ChatMsgHeader = ({ badges, displayPronoun, color, userDisplayName, direction }: ChatMsgHeaderProps) => {
+  const theme = useTheme();
+  const pronounLocation = theme.chat.header.pronounLocation || 'before-name';
 
-    <S.UserName>{ userDisplayName }</S.UserName>
-  </S.Container>
-);
+  const renderPronouns = () => displayPronoun ? (
+    <S.Pronouns>({ displayPronoun })</S.Pronouns>
+  ) : null;
+
+  return (
+    <S.Container $userColor={color || 'black'} $direction={direction}>
+      {pronounLocation === 'before-icons' && renderPronouns()}
+      
+      {badges.map((badge) => (
+        <S.Badge height={18} width={18} src={badge.url} key={badge.id} alt={badge.id} />
+      ))}
+
+      {pronounLocation === 'before-name' && renderPronouns()}
+
+      <S.UserName>{userDisplayName}</S.UserName>
+
+      {pronounLocation === 'after-name' && renderPronouns()}
+    </S.Container>
+  );
+};
 
 export default ChatMsgHeader;

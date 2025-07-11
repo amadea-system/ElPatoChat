@@ -226,7 +226,11 @@ const hibikiThemeAlpha1: DefaultTheme = {
     header: {
       ...theme2.chat.header,
       bg: '#ffb7f2',
+
+      // TODO: Should the following be configurable via `src\types\index.tsx::UserConfiguration`?
+      pronounLocation: 'after-name',
     },
+
     content: {
       ...theme2.chat.content,
       bg: '#fff2f2',

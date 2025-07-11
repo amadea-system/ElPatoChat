@@ -20,6 +20,8 @@ declare module 'styled-components' {
         fontSize: string,
         fontWeight: string,
         sideMargin?: string, // Default: '8px'
+
+        pronounLocation?: 'before-icons' | 'before-name' | 'after-name',
       },
 
       content: Box & {
