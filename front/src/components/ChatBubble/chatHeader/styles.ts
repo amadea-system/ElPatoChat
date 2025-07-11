@@ -4,9 +4,9 @@ import { THEME_USER_COLOR } from '../../../themes/mainTheme';
 export const Container = styled.div<{ $userColor: string, $direction: 'left' | 'right' }>`
   margin-bottom: -8px;
 
-  ${({ $direction }) => $direction === 'right' ?
-    css` margin-right: 8px; ` :
-    css` margin-left: 8px; 
+  ${({ $direction, theme }) => $direction === 'left' ?
+    css` margin-left: ${theme.chat.header.sideMargin || '8px'}; ` :
+    css` margin-right: ${theme.chat.header.sideMargin || '8px'}; 
   `}
 
   display: flex;

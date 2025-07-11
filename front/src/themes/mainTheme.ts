@@ -230,6 +230,8 @@ const hibikiThemeAlpha1: DefaultTheme = {
     content: {
       ...theme2.chat.content,
       bg: '#fff2f2',
+      sideMargin: '18px',
+
       reward: {
         ...theme2.chat.content.reward,
         bg: '#b5cef7',
@@ -240,6 +242,6 @@ const hibikiThemeAlpha1: DefaultTheme = {
       }
     },
   }
-};    
+};
 
 export { theme1, theme2, theme3, pinkTheme, floating, hibikiThemeAlpha1 };

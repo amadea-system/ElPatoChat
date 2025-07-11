@@ -19,11 +19,13 @@ declare module 'styled-components' {
       header: Box & {
         fontSize: string,
         fontWeight: string,
+        sideMargin?: string, // Default: '8px'
       },
 
       content: Box & {
         fontSize: string,
         fontWeight: string,
+        sideMargin?: string, // Default: None
 
         reply: Box,
         reward: Box

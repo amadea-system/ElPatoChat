@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { ChatMessageData } from '../../types';
 import { THEME_USER_COLOR } from '../../themes/mainTheme';
 
+// This is the primary container that contains the Header and Content of the chat message
 export const Message = styled.div<{ $direction: 'left' | 'right' }>`
   text-align: end;
 
@@ -54,10 +55,16 @@ export const Content = styled.div<{
     css` 
       text-align: start;
       justify-content: flex-start;
+      ${(props) => props.theme.chat.content.sideMargin && css`
+        margin-left: ${props.theme.chat.content.sideMargin};
+      `}
     ` :
     css` 
       text-align: end; 
       justify-content: flex-end;
+      ${(props) => props.theme.chat.content.sideMargin && css`
+        margin-right: ${props.theme.chat.content.sideMargin};
+      `}
     `
 }
 
