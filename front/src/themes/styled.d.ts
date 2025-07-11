@@ -8,7 +8,10 @@ interface Box {
   border: string,
   padding: string,
   boxShadow?: string,
-  textShadow?: string
+  textShadow?: string,
+  rotation?: string,
+  randomRotation?: boolean,
+  rotationOrigin?: string,
 }
 
 declare module 'styled-components' {

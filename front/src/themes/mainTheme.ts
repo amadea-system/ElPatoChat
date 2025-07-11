@@ -229,6 +229,10 @@ const hibikiThemeAlpha1: DefaultTheme = {
 
       // TODO: Should the following be configurable via `src\types\index.tsx::UserConfiguration`?
       pronounLocation: 'after-name',
+      rotation: '2deg',
+      randomRotation: true,
+      // sideMargin: '10px',
+      // sideMargin: '-10px',
     },
 
     content: {
