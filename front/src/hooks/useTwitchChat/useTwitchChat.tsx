@@ -9,6 +9,7 @@ import { TwitchChatParser } from './twitchChatParser';
 import { useCustomEmotes } from '../useCustomEmotes';
 import { useTTS } from '../useTTS/useTTS';
 import { useConfiguration } from '../../store/configuration';
+import { createNewMessage } from '../../utils/createNewMessage';
 
 const MAX_MESSAGES = 20;
 
@@ -96,6 +97,67 @@ export const useTwitchChat = (channel: UserInformation) => {
       }
       setChatMessages(prev => prev.filter(item => item.id !== messageId));
     });
+
+    chat.onAuthenticationFailure((text, retryCount) => {
+      console.error(`Authentication failed: ${text}. Retry count: ${retryCount}`);
+      const uniqueId = `auth-failure-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        // content: 'Twitch Chat Authentication Failure...',
+        content: `Twitch Chat Authentication Failure @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`,
+        userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
+        systemMessage: true
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+
+    chat.onAuthenticationSuccess(() => {
+      console.log('Twitch Chat Authentication Success');
+      const uniqueId = `auth-success-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        // content: 'Twitch Chat Authentication Success...',
+        content: `Twitch Chat Authentication Success @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`,
+        userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
+        systemMessage: true
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+
+    chat.onConnect(() => {
+      console.log('Twitch Chat Connected');
+      const uniqueId = `connect-success-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        // content: 'Twitch Chat Connected...',
+        content: `Twitch Chat Connected @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`,
+        userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
+        systemMessage: true
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+
+    chat.onDisconnect((manually, reason) => {
+      console.log(`Twitch Chat Disconnected. Manually: ${manually}, Reason: ${reason}`);
+      const uniqueId = `disconnect-success-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        // content: 'Twitch Chat Disconnected...',
+        content: `Twitch Chat Disconnected @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`,
+        userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
+        systemMessage: true
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+
   }, [chat]);
 
   useEffect(() => {
