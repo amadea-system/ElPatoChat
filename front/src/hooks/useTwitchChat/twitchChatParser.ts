@@ -1,9 +1,25 @@
+/**
+ * Twitch Chat Parser
+ * 
+ * This module is responsible for parsing Twitch chat messages into a structured format.
+ * This is used to hydrate the contentParts & effect fields of ChatMessageData.
+ * 
+ */
 import { CustomEmote } from '../../api/elpatoApi/types';
 import { SpecialMsgId, TwitchAnimationId, TwitchMsgTags, TwurpleChatMessage } from './types';
 import { ChatMessageData, MessagePart } from '../../types';
 
 const UNDEFINED_UNICODE_CHARACTER = '󠀀';
 
+/**
+ * Parses a Twitch chat message into an array of MessagePart objects suitable for the contentParts field of ChatMessageData.
+ * 
+ * @param content The content of the message (AKA TwurpleChatMessage.text)
+ * @param emoteOffsets A map of emote offsets (AKA TwurpleChatMessage.emoteOffsets)
+ * @param customEmotes An array of custom emotes. Something something BetterTTV, SevenTV, FrankerFaceZ emotes. TODO: Look into this.
+ * @param twurpleMsg The Twurple chat message object.
+ * @returns An array of MessagePart objects. Suitable for populating the contentParts field of ChatMessageData.
+ */
 const parseMessage = (content: string, emoteOffsets: Map<string, Array<string>>, customEmotes: Array<CustomEmote>, twurpleMsg: TwurpleChatMessage):Array<MessagePart> => {
   const contentWithoutHiddenCharacter = content.replace(UNDEFINED_UNICODE_CHARACTER, '');
 
@@ -143,7 +159,11 @@ const createEmoteArray = (emoteOffsets: Map<string, Array<string>>) => {
   return emotesSorted;
 };
 
-
+/**
+ * Parses the message effect from a Twurple chat message.
+ * @param msg The Twurple chat message object.
+ * @returns The message effect, such as 'normal', 'rainbow', 'simmer', or 'big-emote'. (ChatMessageData['effect'])
+ */
 const parseMessageEffect = (msg: TwurpleChatMessage): ChatMessageData['effect'] => {
   const msgId = msg.tags.get(TwitchMsgTags.MsgId);
 
