@@ -7,6 +7,7 @@ import { GlobalStyle } from './globalStyle';
 import { useConfiguration } from './store/configuration';
 import { ThemeProvider } from 'styled-components';
 import { floating, pinkTheme, theme1, theme2, theme3, hibikiThemeAlpha1 } from './themes/mainTheme';
+import { useDocumentConfig } from './hooks/useDocumentConfig';
 
 const isObs = () => !!(window as { obsstudio?: unknown })['obsstudio'];
 
