@@ -13,3 +13,12 @@ front/.vscode/extensions.json
 
 .pnp.*
 /*.bat
+tokens.*.json
+
+
+front/vite.config.ts.timestamp-*.mjs
+
+*.bk
+
+//TODO: Make sure to commit `systemMessageContent` if I ever make it work and start using it.
+**/systemMessageContent/**
