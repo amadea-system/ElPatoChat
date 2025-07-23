@@ -1,8 +1,8 @@
-import { ChatMessageData } from '../types';
+import { ChatMessageData, MessagePart } from '../types';
 
 export const createNewMessage = (
   data: Omit<Partial<ChatMessageData>, 'id' | 'userDisplayName'> & { id: string; userDisplayName: string },
-  typeOverride?: contentParts['type']
+  typeOverride?: MessagePart['type']
 ): ChatMessageData => {
 
   if (!data.contentParts && data.content) {
