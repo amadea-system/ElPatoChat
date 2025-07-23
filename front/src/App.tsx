@@ -34,6 +34,9 @@ const App = () => {
   const [channel, setChannel] = useState<UserInformation | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Configure document title and language from environment variables
+  useDocumentConfig();
+
   const selectedTheme = getTheme(userTheme);
 
   const overrideOBSCheck = useConfiguration(state => state.fakeOBS);
