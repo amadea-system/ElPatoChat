@@ -9,6 +9,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -34,6 +35,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'vip',
@@ -70,6 +72,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -101,6 +104,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -137,6 +141,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -172,6 +177,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'vip',
@@ -202,6 +208,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'vip',
@@ -228,6 +235,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -253,6 +261,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'vip',
@@ -334,6 +343,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -365,6 +375,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'She/Her',
     'color': '#CF7DCF',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'moderator',
@@ -432,6 +443,7 @@ export const SampleMessages: Array<ChatMessageData> = [
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
     'emoteOffsets': new Map(),
+    'messageType': 'chat',
     'badges': [
       {
         'id': 'broadcaster',

@@ -21,6 +21,7 @@ export interface ChatMessageData {
   }>,
   contentParts: Array<MessagePart>,
   systemMessage?: boolean,
+  messageType: 'chat' | 'system' | 'follow',
 }
 
 export interface TTSReplacement {

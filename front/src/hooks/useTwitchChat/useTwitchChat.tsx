@@ -229,6 +229,7 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
         displayPronoun: pronoun,
         color: msg.userInfo.color,
         emoteOffsets: msg.emoteOffsets,
+        messageType: 'chat',
         badges: parseBadges(msg.userInfo.badges),
         contentParts: msgParts
       };

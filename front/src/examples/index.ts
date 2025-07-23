@@ -30,6 +30,7 @@ export const testMessages = messageContents.map((content, index) => (
     id: `${index}`,
     effect: 'normal',
     emoteOffsets: new Map(),
+    messageType: 'chat',
     contentParts: [{
       originalContent: content,
       content,

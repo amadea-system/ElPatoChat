@@ -22,6 +22,7 @@ export const createNewMessage = (
     // systemMessage: false,  // Optional
     badges: [],
     contentParts: [],
+    messageType: 'chat',
     ...data
   };
 };
