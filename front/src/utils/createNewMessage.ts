@@ -19,7 +19,6 @@ export const createNewMessage = (
     content: '',
     // displayPronoun: 'they/them',  // Optional
     // color: '#FFFFFF',  // Optional
-    // systemMessage: false,  // Optional
     badges: [],
     contentParts: [],
     messageType: 'chat',

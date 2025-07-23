@@ -20,7 +20,6 @@ export interface ChatMessageData {
     url: string
   }>,
   contentParts: Array<MessagePart>,
-  systemMessage?: boolean,
   messageType: 'chat' | 'system' | 'follow',
 }
 

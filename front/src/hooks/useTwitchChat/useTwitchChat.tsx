@@ -82,7 +82,7 @@ const handleStatusEvent = (
     id: uniqueId,
     content: finalContent,
     userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
-    systemMessage: true
+    messageType: 'system',
   });
 
   if (removePastMessages) {
