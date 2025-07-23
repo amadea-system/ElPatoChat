@@ -1,7 +1,7 @@
 import { CustomEmote } from '../api/elpatoApi/types';
 
 export type MessagePart = {
-  type: 'text' | 'emote' | 'mention' | 'reply' | 'redeption',
+  type: 'text' | 'emote' | 'mention' | 'reply' | 'redeption' | 'follow',
   content: string,
   customEmote?: CustomEmote,
   originalContent: string

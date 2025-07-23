@@ -55,3 +55,23 @@ export const Redemption = styled(ContentExtras)`
     box-shadow: ${props.theme.chat.content.reward.boxShadow};
   `}
 `;
+
+export const Follow = styled(ContentExtras)`
+  // display: block;
+  color: #10ece1;
+  background-color: #f3157d;
+  font-style: italic;
+
+  border-radius: ${(props) => props.theme.chat.content.reward.borderRadius};
+  border: ${(props) => props.theme.chat.content.reward.border};
+  padding: ${(props) => props.theme.chat.content.reward.padding};
+
+  ${(props) => props.theme.chat.content.reward.textShadow && css`
+    text-shadow: ${props.theme.chat.content.reward.textShadow.replace(THEME_USER_COLOR, props.$userColor)};
+  `}
+
+  ${(props) => props.theme.chat.content.reward.boxShadow && css`
+    box-shadow: ${props.theme.chat.content.reward.boxShadow};
+  `}
+
+`;

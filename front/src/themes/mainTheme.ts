@@ -247,8 +247,13 @@ const hibikiThemeAlpha1: DefaultTheme = {
       reply: {
         ...theme2.chat.content.reply,
         bg: '#D6B8FF',
-      }
+      },
     },
+    systemContent: {
+      ...theme2.chat.content,
+      bg: '#dacfcf',
+      sideMargin: '0',
+    }
   }
 };
 

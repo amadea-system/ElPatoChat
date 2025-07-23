@@ -35,6 +35,11 @@ declare module 'styled-components' {
         reply: Box,
         reward: Box
         mention: Box,
+      },
+      systemContent?: Box & {
+        fontSize: string,
+        fontWeight: string,
+        sideMargin?: string, // Default: None
       }
     }
   }

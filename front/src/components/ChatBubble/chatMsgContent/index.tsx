@@ -10,9 +10,7 @@ export type ChatMsgContentProps = {
 const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentProps) => {
   if (messageParts.length === 0) return null;
 
-  // const firstPart: MessagePart = messageParts[0];
-  // const remainingParts = messageParts.slice(1);
-  const parentTypes = ['reply', 'redeption'];
+  const parentTypes = ['reply', 'redeption', 'follow'];
   const parentPart = messageParts.find(part => parentTypes.includes(part.type));
   const firstPart = parentPart ?? messageParts[0];
   const remainingParts = parentPart ? messageParts.filter(part => part !== parentPart) : messageParts.slice(1);
@@ -37,6 +35,8 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
       return <S.Reply $userColor={userColor} key={index}>{ content }</S.Reply>;
     case 'mention':
       return <S.ContentExtras $userColor={userColor} key={index}>{ content }</S.ContentExtras>;
+    case 'follow':
+      return <S.Follow $userColor={userColor} key={index}>{ content }</S.Follow>;
     default:
       return <span key={index}>{ content }</span>;
     }
