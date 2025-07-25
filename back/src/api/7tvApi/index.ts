@@ -1,4 +1,5 @@
 import { ApiResponse, ElPatoEmote } from "../../types";
+import { escapeEmoteCode } from "../../utils/escapeString";
 
 interface SevenTVEmoteResponse {
   id: string,
@@ -45,6 +46,7 @@ const get7TVEmotes = async (userId: string) => {
     id: e.id,
     type: '7TV',
     code: e.name,
+    escapedCode: escapeEmoteCode(e.name),
     animated: e.data.animated,
     url1x: "http:" + e.data.host.url + "/" + e.data.host.files[0]?.name,
     url2x: "http:" + e.data.host.url + "/" + e.data.host.files[1]?.name,

@@ -1,4 +1,5 @@
 import { ApiResponse, ElPatoEmote } from "../../types";
+import { escapeEmoteCode } from "../../utils/escapeString";
 
 export interface FrankerEmote {
   id:string,
@@ -33,6 +34,7 @@ const getFrankerEmotes = async (userId: string) => {
     id: e.id,
     type: 'FFZ',
     code: e.code,
+    escapedCode: escapeEmoteCode(e.code),
     animated: e.animated,
     url1x: e.images["1x"],
     url2x: e.images["2x"],
