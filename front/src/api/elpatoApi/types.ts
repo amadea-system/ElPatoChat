@@ -1,6 +1,7 @@
 export interface CustomEmote {
   id: string,
   code: string,
+  escapedCode: string,
   type: 'BetterTTV' | '7TV' | 'FFZ',
   animated: boolean,
   url1x: string,

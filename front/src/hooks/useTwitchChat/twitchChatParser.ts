@@ -81,7 +81,7 @@ const parseCustomEmotes = (messageParts: Array<MessagePart>, customEmotes: Array
     newMessageParts = newMessageParts.flatMap((part) => {
       if (part.type === 'emote') return part;
       const parts: Array<MessagePart> = part.content
-        .split(new RegExp(`\\b${emote.code}\\b`, 'g'))
+        .split(new RegExp(`\\b${emote.escapedCode}\\b`, 'g'))
         .flatMap((txt) => ([
           { content: txt, type: 'text', originalContent: txt } satisfies MessagePart,
           { content: emote.code, type: 'emote', customEmote: emote, originalContent: emote.code } satisfies MessagePart
