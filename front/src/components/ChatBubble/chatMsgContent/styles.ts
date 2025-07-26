@@ -58,8 +58,12 @@ export const Redemption = styled(ContentExtras)`
 
 export const Follow = styled(ContentExtras)`
   // display: block;
-  color: #10ece1;
-  background-color: #f3157d;
+  // color: #10ece1;
+  // background-color: #f3157d;
+
+  color: #000f0eff;
+  background-color: #f460a5ff;
+
   font-style: italic;
 
   border-radius: ${(props) => props.theme.chat.content.reward.borderRadius};
