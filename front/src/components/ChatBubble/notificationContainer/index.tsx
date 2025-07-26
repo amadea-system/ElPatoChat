@@ -2,6 +2,7 @@
  * Container Div for Notifications such as Follows, Subs, Etc.
  */
 
+import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
 export interface DecorationProps {
