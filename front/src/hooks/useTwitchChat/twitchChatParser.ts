@@ -12,6 +12,19 @@ import { ChatMessageData, MessagePart } from '../../types';
 const UNDEFINED_UNICODE_CHARACTER = '󠀀';
 
 /**
+ * Substring function that handles unicode characters better than the native.
+ * I am not sure if this works in all edge cases, but it does seem to work with single and combined emojis.
+ * @param content 
+ * @param start 
+ * @param end 
+ * @returns 
+ */
+const substring = (content: string, start: number, end?: number) => {
+  return [...content].slice(start, end).join('');
+};
+
+
+/**
  * Parses a Twitch chat message into an array of MessagePart objects suitable for the contentParts field of ChatMessageData.
  * 
  * @param content The content of the message (AKA TwurpleChatMessage.text)
@@ -103,8 +116,8 @@ const parseTwitchEmotes = (content: string, emoteOffsets: Map<string, Array<stri
   emotes.forEach(({ emoteId, start, end }) => {
     const textContent: MessagePart = {
       type: 'text',
-      content: content.substring(i, start).trim(),
-      originalContent: content.substring(i, start).trim()
+      content: substring(content, i, start).trim(),
+      originalContent: substring(content, i, start).trim()
     };
     if (textContent.content.length) {
       parsedMessage.push(textContent);
@@ -112,15 +125,15 @@ const parseTwitchEmotes = (content: string, emoteOffsets: Map<string, Array<stri
     parsedMessage.push({
       content: emoteId,
       type: 'emote',
-      originalContent: content.substring(start, end + 1),
+      originalContent: substring(content, start, end + 1),
     });
     i = end + 1;
   });
 
   const textContent: MessagePart = {
     type: 'text',
-    content: content.substring(i).trim(),
-    originalContent: content.substring(i).trim()
+    content: substring(content, i).trim(),
+    originalContent: substring(content, i).trim()
   };
 
   if (textContent.content.length) {
