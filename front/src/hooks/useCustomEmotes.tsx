@@ -17,7 +17,7 @@ export const useCustomEmotes = (channelId: string) => {
         !isFrankerEnabled
       ) return;
 
-      const resp = await elPatoApi.getEmotes(channelId, isBetterTTVEnabled, isFrankerEnabled, isFrankerEnabled);
+      const resp = await elPatoApi.getEmotes(channelId, isBetterTTVEnabled, isFrankerEnabled, isSevenTVEnabled);
       if (!resp.data) return;
       setCustomEmotes(resp.data);
     })();
