@@ -22,3 +22,6 @@ front/vite.config.ts.timestamp-*.mjs
 
 //TODO: Make sure to commit `systemMessageContent` if I ever make it work and start using it.
 **/systemMessageContent/**
+
+/* ---- My Art Assets ---- */
+butterfly-mix.png

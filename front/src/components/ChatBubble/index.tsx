@@ -2,6 +2,8 @@ import { useConfiguration } from '../../store/configuration';
 import { ChatMessageData } from '../../types';
 import ChatMsgHeader from './chatHeader';
 import ChatMsgContent from './chatMsgContent';
+import Decoration  from './decoration';
+import NotificationContainer from './notificationContainer';
 import * as S from './styles';
 
 export interface ChatMsgProps extends ChatMessageData {
@@ -21,9 +23,15 @@ const ChatMsg = (props: ChatMsgProps) => {
   } else if (props.messageType === 'follow') {
     return (
       <S.Message $direction={chatDirection}>
-        <S.FollowNotificationContent $userColor={props.color ?? 'black'} $effect={props.effect} $direction={chatDirection}>
-          <ChatMsgContent userColor={props.color} messageParts={props.contentParts} />
-        </S.FollowNotificationContent>
+        <NotificationContainer direction={chatDirection} alignCorrection={false}>
+          <Decoration
+            url="./img/butterfly-mix.png"
+            alignCorrection={true}
+          />
+          <S.FollowNotificationContent $userColor={props.color ?? 'black'} $effect={props.effect} $direction={chatDirection}>
+            <ChatMsgContent userColor={props.color} messageParts={props.contentParts} />
+          </S.FollowNotificationContent>
+        </NotificationContainer>
       </S.Message>
     );
   }
