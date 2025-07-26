@@ -1,7 +1,7 @@
 import { ApiResponse } from '../ApiResponse';
 import { Badge, CustomEmote, UserInformation } from './types';
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://api.niv3kelpato.com/api/';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://api.elpato.dev/ChatApi/';
 
 const getEmotes = async (channelId: string, 
   isBetterTTVEnabled: boolean,
