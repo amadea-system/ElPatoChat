@@ -2,7 +2,11 @@ import { ApiResponse } from '../ApiResponse';
 import { Badge, CustomEmote, UserInformation } from './types';
 import { AccessToken } from '@twurple/auth';
 
-const BASE_URL = import.meta.env?.VITE_BACKEND_URL || 'https://api.elpato.dev/ChatApi/';
+// const BASE_URL = import.meta.env?.VITE_BACKEND_URL || 'https://api.elpato.dev/ChatApi/';
+const BASE_URL = import.meta.env?.VITE_BACKEND_URL;
+if (!BASE_URL) {
+  throw new Error('VITE_BACKEND_URL is not defined. Please set it in your environment variables.');
+}
 
 const getEmotes = async (channelId: string, 
   isBetterTTVEnabled: boolean,
