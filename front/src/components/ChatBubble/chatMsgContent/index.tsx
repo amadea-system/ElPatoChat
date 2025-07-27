@@ -1,5 +1,6 @@
 import { MessagePart } from '../../../types';
 import Emote from '../emote';
+import ChatText from '../chatText';
 import * as S from './styles';
 
 /* ----- Configs ----- */
@@ -26,17 +27,19 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
   const remainingParts = headerPart ? messageParts.filter(part => part !== headerPart) : messageParts.slice(1);
 
   const renderPart = ({ content, type, customEmote }: MessagePart, index: number) => {
+
+    const scale = (() => {
+      const partCountModifier = headerTypes.includes(firstPart.type) ? 1 : 0;  // If the message has a part that is a reply, redemption, or follow, we increase the required number by one to account for the header part.
+      if (messageParts.length <= (EmoteScaleLimits.Large + partCountModifier)) {
+        return 3;
+      } else if (messageParts.length <= (EmoteScaleLimits.Medium + partCountModifier)) {
+        return 2;
+      }
+      return 1;
+    })();
+
     switch (type) {
     case 'emote': {
-      const scale = (() => {
-        const partCountModifier = headerTypes.includes(firstPart.type) ? 1 : 0;  // If the message has a part that is a reply, redemption, or follow, we increase the required number by one to account for the header part.
-        if (messageParts.length <= (EmoteScaleLimits.Large + partCountModifier)) {
-          return 3;
-        } else if (messageParts.length <= (EmoteScaleLimits.Medium + partCountModifier)) {
-          return 2;
-        }
-        return 1;
-      })();
       return <Emote
         key={index}
         id={content}
@@ -56,7 +59,8 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
     case 'follow':
       return <S.Follow $userColor={userColor} key={index}>{ content }</S.Follow>;
     default:
-      return <span key={index}>{ content }</span>;
+      // return <span key={index}>{ content }</span>;
+      return <ChatText key={index} text={content} scale={scale} />;
     }
   };
 

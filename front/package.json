@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@fontsource/poppins": "^5.0.13",
-
+    "@twemoji/api": "^16.0.1",
     "@twurple/api": "^7.3.0",
     "@twurple/auth": "^7.3.0",
     "@twurple/chat": "^7.3.0",
