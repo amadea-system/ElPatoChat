@@ -50,7 +50,10 @@ export const defaultUserConfiguration: UserConfiguration = {
   chatDirection: 'right',
   frankerFaceEnabled: true,
   sevenTVEnabled: true,
-  isTTSEnabled: true,
+  isTTSEnabled: false,
   ttsConfiguration: ttsDefaultConfig,
   pauseSampleMessages: false,
+  testMode: undefined,
+  // testMode: 'square-test-pattern',
+  fakeOBS: false,
 };
