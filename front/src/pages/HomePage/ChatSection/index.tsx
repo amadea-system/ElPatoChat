@@ -7,6 +7,7 @@ import { ChatMessageData } from '../../../types';
 import { pickRandom } from '../../../utils/randomUtils';
 import { SampleMessages } from '../../../examples/sampleMessages';
 
+const ENABLE_RANDOM_SAMPLE_MESSAGES = true;
 
 export interface ChatSectionProps {
   channelInformation?: UserInformation | null,
@@ -15,23 +16,33 @@ export interface ChatSectionProps {
 
 export const ChatSection = ({ channelInformation, sampleMessagesPaused }: ChatSectionProps) => {
   const [messages, setMessages] = useState<Array<ChatMessageData>>([]);
+  const [sampleMessageIdx, setSampleMessageIdx] = useState(0);
 
   useEffect(() => {
     if (channelInformation) return;
 
     const onInterval = () => {
       if (sampleMessagesPaused) return;
+
+      const selectedMessage = ENABLE_RANDOM_SAMPLE_MESSAGES 
+        ? pickRandom(SampleMessages)
+        : SampleMessages[sampleMessageIdx];
+
       setMessages((prevMessages) => (
         [
-          { ...pickRandom(SampleMessages), id: `${Math.random()}` },
+          { ...selectedMessage, id: `${Math.random()}` },
           ...prevMessages
         ].splice(0, 10)
       ));
+
+      if (!ENABLE_RANDOM_SAMPLE_MESSAGES) {
+        setSampleMessageIdx((prevIdx) => (prevIdx + 1) % SampleMessages.length);
+      }
     };
     const intervalRef = setInterval(onInterval, 1000);
 
     return () => { clearInterval(intervalRef); };
-  }, [channelInformation, sampleMessagesPaused]);
+  }, [channelInformation, sampleMessagesPaused, sampleMessageIdx]);
 
   return (
     <S.ChatContainer>
