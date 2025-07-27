@@ -42,6 +42,31 @@ patoApi.get('/:channelId/emotes', async (req, res) => {
   res.status(resp.status).send(resp.body);
 });
 
+/**
+ * IMPORTANT: Obviously, this code should not be used in production.
+ *
+ * This is mostly temporary and should eventually be replaced by a socket-based system to forward the
+ * EventSub events to the frontend.
+ */
+patoApi.get('/token/:userId', async (req, res) => {
+  const resp = await apiHandler.onGetUserToken(req.params.userId);
+  res.status(resp.status).send(resp.body);
+});
+
+/**
+ * IMPORTANT: Obviously, this code should not be used in production.
+ *
+ * This is mostly temporary and should eventually be replaced by a socket-based system to forward the
+ * EventSub events to the frontend.
+ */
+patoApi.post('/token/:userId', express.json(), async (req, res) => {
+  // console.warn('POST /token/:userId is not implemented yet');
+  console.warn('Request parameters:', req.params);
+  console.warn('Request body:', req.body);
+  // res.status(501).send({ error: 'Not implemented' });
+  const resp = await apiHandler.onSetUserToken(req.params.userId, req.body);
+  res.status(resp.status).send(resp.body);
+});
 
 patoApi.listen(PORT, 'localhost', () => {
   console.log(`Started server at http://localhost:${PORT}`)

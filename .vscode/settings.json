@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/.yarn": true,
-        "**/.env": true
+        "**/.env": true,
+        "**/tokens.*.json": true,
     },
 }

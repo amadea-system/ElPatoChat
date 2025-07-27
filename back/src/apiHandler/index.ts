@@ -23,6 +23,12 @@ export class ApiHandler {
     console.error(`Failed to authenticate`);
   };
 
+  /**
+   * IMPORTANT: Obviously, this code should not be used in production.
+   *
+   * This is mostly temporary and should eventually be replaced by a socket-based system to forward the
+   * EventSub events to the frontend.
+   */
   public onGetUserToken = async (userId: string): Promise<ElPatoApiResponse<AccessToken>> => {
 
     const token = await tokenApi.getUserToken(userId);
@@ -36,6 +42,12 @@ export class ApiHandler {
     return { status: 404 };
   }
 
+  /**
+   * IMPORTANT: Obviously, this code should not be used in production.
+   *
+   * This is mostly temporary and should eventually be replaced by a socket-based system to forward the
+   * EventSub events to the frontend.
+   */
   public onSetUserToken = async (userId: string, token: AccessToken): Promise<ElPatoApiResponse<boolean>> => {
     const resp = await tokenApi.setUserToken(userId, token);
     if (resp) {
