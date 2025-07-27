@@ -20,18 +20,16 @@ export type ChatMsgContentProps = {
 const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentProps) => {
   if (messageParts.length === 0) return null;
 
-  // TODO: `parent` is not a good name, as it doen't actually represent a parent of the message, but rather a header or a special part of the message
-  //       that shouldn't count towards the emote scaling and is not part of the main message content div.
-  const parentTypes = ['reply', 'redeption', 'follow'];
-  const parentPart = messageParts.find(part => parentTypes.includes(part.type));
-  const firstPart = parentPart ?? messageParts[0];
-  const remainingParts = parentPart ? messageParts.filter(part => part !== parentPart) : messageParts.slice(1);
+  const headerTypes = ['reply', 'redeption', 'follow'];
+  const headerPart = messageParts.find(part => headerTypes.includes(part.type));
+  const firstPart = headerPart ?? messageParts[0];
+  const remainingParts = headerPart ? messageParts.filter(part => part !== headerPart) : messageParts.slice(1);
 
   const renderPart = ({ content, type, customEmote }: MessagePart, index: number) => {
     switch (type) {
     case 'emote': {
       const scale = (() => {
-        const partCountModifier = parentTypes.includes(firstPart.type) ? 1 : 0;  // If the message has a part that is a reply, redemption, or follow, we increase the required number by one to account for the parent part.
+        const partCountModifier = headerTypes.includes(firstPart.type) ? 1 : 0;  // If the message has a part that is a reply, redemption, or follow, we increase the required number by one to account for the header part.
         if (messageParts.length <= (EmoteScaleLimits.Large + partCountModifier)) {
           return 3;
         } else if (messageParts.length <= (EmoteScaleLimits.Medium + partCountModifier)) {
@@ -64,7 +62,7 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
 
   return (
     <>
-      {parentTypes.includes(firstPart.type) && remainingParts.length > 0 && (
+      {headerTypes.includes(firstPart.type) && remainingParts.length > 0 && (
         <>
           {renderPart(firstPart as MessagePart, 0)}
           <div>
@@ -75,7 +73,7 @@ const ChatMsgContent = ({ messageParts, userColor = 'black' }: ChatMsgContentPro
         </>
       )}
 
-      {!parentTypes.includes(firstPart.type) &&
+      {!headerTypes.includes(firstPart.type) &&
         <div>
           {renderPart(firstPart as MessagePart, 0)}
           {remainingParts.map((part, idx) =>
