@@ -665,7 +665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@twurple/api@npm:^7.1.0":
+"@twurple/api@npm:7.3.0, @twurple/api@npm:^7.3.0":
   version: 7.3.0
   resolution: "@twurple/api@npm:7.3.0"
   dependencies:
@@ -686,7 +686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@twurple/auth@npm:^7.1.0":
+"@twurple/auth@npm:7.3.0, @twurple/auth@npm:^7.3.0":
   version: 7.3.0
   resolution: "@twurple/auth@npm:7.3.0"
   dependencies:
@@ -700,7 +700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@twurple/chat@npm:^7.1.0":
+"@twurple/chat@npm:^7.3.0":
   version: 7.3.0
   resolution: "@twurple/chat@npm:7.3.0"
   dependencies:
@@ -727,6 +727,39 @@ __metadata:
     klona: "npm:^2.0.4"
     tslib: "npm:^2.0.3"
   checksum: 10c0/53ff139762379fc444ef5c291bd904ef659ee4e8da87e44a0924b71dcb9f88fc361b0702d0952b90d124f3e17616814c5944f2d465deb1b6f503fa504c5dc350
+  languageName: node
+  linkType: hard
+
+"@twurple/eventsub-base@npm:7.3.0":
+  version: 7.3.0
+  resolution: "@twurple/eventsub-base@npm:7.3.0"
+  dependencies:
+    "@d-fischer/logger": "npm:^4.2.1"
+    "@d-fischer/shared-utils": "npm:^3.6.1"
+    "@d-fischer/typed-event-emitter": "npm:^3.3.0"
+    "@twurple/api": "npm:7.3.0"
+    "@twurple/auth": "npm:7.3.0"
+    "@twurple/common": "npm:7.3.0"
+    tslib: "npm:^2.0.3"
+  checksum: 10c0/b6eacdf369d103065732080c4842fde114bf2f158e75fd2e3e04905dc8c5117cdd5010be5e6b146634d9398feb4a739193c453fa04551cac48af49108453c240
+  languageName: node
+  linkType: hard
+
+"@twurple/eventsub-ws@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "@twurple/eventsub-ws@npm:7.3.0"
+  dependencies:
+    "@d-fischer/connection": "npm:^9.0.0"
+    "@d-fischer/logger": "npm:^4.2.1"
+    "@d-fischer/shared-utils": "npm:^3.6.1"
+    "@d-fischer/typed-event-emitter": "npm:^3.3.0"
+    "@twurple/auth": "npm:7.3.0"
+    "@twurple/common": "npm:7.3.0"
+    "@twurple/eventsub-base": "npm:7.3.0"
+    tslib: "npm:^2.0.3"
+  peerDependencies:
+    "@twurple/api": 7.3.0
+  checksum: 10c0/0246b31d2688e32f6373152009c9542c9b528f203e890da41611b4582f589d8b1a8fa9532d64fe05f21de71fa662ab812d9c7a4ecb3546838652932d8d812daa
   languageName: node
   linkType: hard
 
@@ -1364,9 +1397,10 @@ __metadata:
     "@fontsource/poppins": "npm:^5.0.13"
     "@iconify/json": "npm:^2.2.301"
     "@iconify/tailwind": "npm:^1.2.0"
-    "@twurple/api": "npm:^7.1.0"
-    "@twurple/auth": "npm:^7.1.0"
-    "@twurple/chat": "npm:^7.1.0"
+    "@twurple/api": "npm:^7.3.0"
+    "@twurple/auth": "npm:^7.3.0"
+    "@twurple/chat": "npm:^7.3.0"
+    "@twurple/eventsub-ws": "npm:^7.3.0"
     "@types/node": "npm:^24.0.10"
     "@types/react": "npm:^18.2.15"
     "@types/react-dom": "npm:^18.2.7"
