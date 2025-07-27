@@ -11,7 +11,10 @@ import { useTTS } from '../useTTS/useTTS';
 import { useConfiguration } from '../../store/configuration';
 import { createNewMessage } from '../../utils/createNewMessage';
 
-const MAX_MESSAGES = 20;
+import { RefreshingAuthProvider } from '@twurple/auth';
+import { ApiClient } from '@twurple/api';
+import { EventSubWsListener } from '@twurple/eventsub-ws';
+import { elPatoApi } from '../../api/elpatoApi';
 
 /* ----------- Types ---------- */
 type OnChatMessageEventHandler = (channel: string, user:string, text:string, msg: TwurpleChatMessage) => Promise<void>;
@@ -31,6 +34,7 @@ type EventSubStatusEventIDPrefix =
 type StatusEventIDPrefix = ChatStatusEventIDPrefix | EventSubStatusEventIDPrefix;
 
 /* ----- Configs ----- */
+const USE_MOCK_API = false;
 const MAX_MESSAGES = 20;
 
 // This is a list of status events that will be displayed in the chat.
@@ -42,6 +46,18 @@ const STATUS_EVENTS_TO_DISPLAY_IN_CHAT: StatusEventIDPrefix[] = [
   'chat-connect-success',
   'chat-disconnect-success',
 
+  // EventSub Status Events
+  // 'subscription-create-success',
+  // 'subscription-create-failure',
+  'user-socket-connect',
+  // 'user-socket-disconnect'
+];
+
+
+/* ----- Env Vars ----- */
+const CLIENT_ID = import.meta.env['VITE_CLIENT_ID'];
+const CLIENT_SECRET = import.meta.env['VITE_CLIENT_SECRET'];
+const CLIENT_LOGIN = import.meta.env['VITE_CLIENT_LOGIN'];
 
 
 /* ---------- Helper Functions ---------- */
@@ -113,6 +129,9 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
   const onChatClearRef = useRef<(() => void) | null>(null);
   const onMessageRemovedRef = useRef<((messageId: string) => void) | null>(null);
 
+  const [eventSubListener, setEventSubListener] = useState<EventSubWsListener | null>(null);
+
+
   /* ----- Chat Client Initialization ----- */
   useEffect(() => {
     const chatClient = new ChatClient({
@@ -126,6 +145,74 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
     return () => {
       chatClient.quit();
       setChat(null);
+    };
+  }, [channelInfo]);
+
+  /* ----- EventSub Listener Initialization ----- */
+  useEffect(() => {
+
+    if (!CLIENT_ID || !CLIENT_SECRET || !CLIENT_LOGIN) {
+      // console.error('Twitch Client ID, Client Secret, Static Access Token, or Client Login is not defined in environment variables.');
+      return;
+    }
+
+    if (channelInfo.login !== CLIENT_LOGIN) {
+      // Ensure that we only try to use the EventSub with the channel specified by Env Vars for now.
+      console.warn(`Channel name does not match client login in Env Vars. Expected: ${CLIENT_LOGIN}, Received: ${channelInfo.login}`);
+      return;
+    }
+
+    /* RefreshingAuthProvider */
+    async function fetchData(channelInfo: UserInformation) {
+      let authProvider;
+      let _eventSubListener;
+      if (!USE_MOCK_API) {
+        const tokenDataResp = await elPatoApi.getUserToken(channelInfo.id);
+        if (tokenDataResp.hasError || !tokenDataResp.data) {
+          console.error('Failed to fetch user token:', tokenDataResp);
+          return;
+        }
+        
+        authProvider = new RefreshingAuthProvider({
+          clientId: CLIENT_ID,
+          clientSecret: CLIENT_SECRET,
+        });
+        console.warn('New `RefreshingAuthProvider` instance created.');
+
+        authProvider.onRefresh(async (userId, newTokenData) => {
+          await elPatoApi.setUserToken(userId, newTokenData);
+          console.log(`Token data for user ${userId} has been updated.`);
+        });
+        const tokenData = tokenDataResp.data;
+        await authProvider.addUserForToken(tokenData);
+        const apiClient = new ApiClient({ authProvider });
+        _eventSubListener = new EventSubWsListener({ apiClient });
+        _eventSubListener.start();
+        setEventSubListener(_eventSubListener);
+      }else {
+        console.warn('Mock API for EventSub Listener not yet implemented. EventSub Listener will not be started.');
+      }
+
+      return _eventSubListener;
+    }
+
+    let _eventSubListener: EventSubWsListener | null = null;
+    fetchData(channelInfo)
+      .catch(error => {
+        console.error('Error fetching data for channel:', channelInfo.login, ' Error:', error);
+      }).then((__eventSubListener) => {
+        if (!__eventSubListener) {
+          console.error('EventSub Listener is null after fetching data.');
+          return;
+        }
+        _eventSubListener = __eventSubListener;
+        console.log('EventSub Listener started successfully.');
+      });
+    return () => {
+      if (_eventSubListener) {
+        _eventSubListener.stop();
+      }
+      setEventSubListener(null);
     };
   }, [channelInfo]);
 
@@ -212,6 +299,120 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
     });
 
   }, [chat]);
+
+  useEffect(() => {
+    if (!eventSubListener) return;
+
+    if (!eventSubListener.isActive){
+      console.error('EventSub Listener is not active. Please check your connection.');
+      return;
+    }
+
+    /* ----- EventSub Helper Functions ----- */
+
+    /** 
+     * Helper function to convert Error Messages to a string suitable for display.
+     * @param error The error object or message.
+     * @return A string representation of the error message.
+    */
+    const eventSubErrorToString = (error: unknown): string => {
+      if (error instanceof Error) {
+        return ` => Error: ${error.message}`;
+      } else if (typeof error === 'string') {
+        return ` => Error: ${error}`;
+      }
+      return '';
+    };
+
+    /* ---- EventSub Listeners ---- */
+
+    /* -- EventSub Listener for Subscription Events -- */
+    eventSubListener.onSubscriptionCreateSuccess(async event => {
+      // Convert event.id from Format 'channel.update.v2.{USER-ID}' to a form like 'channel.update.v2'.
+      const subscriptionID = event.id.substring(0, event.id.lastIndexOf('.'));
+      const eventMsgIDPrefix = 'subscription-create-success';
+
+      console.log('onSubscriptionCreateSuccess fired', event._cliName);
+      console.log(`Event Msg ID Prefix: ${eventMsgIDPrefix}-${subscriptionID}`);
+      console.log(event);
+      const chatMsg = `Subscription created successfully for ${event.id} @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`;  // ${event._twitchId} -
+      handleStatusEvent(setChatMessages, eventMsgIDPrefix, true, chatMsg, subscriptionID);
+    });
+
+    eventSubListener.onSubscriptionCreateFailure(async (event, error) => {
+      // Convert event.id from Format 'channel.update.v2.{USER-ID}' to a form like 'channel.update.v2'.
+      const subscriptionID = event.id.substring(0, event.id.lastIndexOf('.'));
+      const eventMsgIDPrefix = 'subscription-create-failure';
+
+      console.log('onSubscriptionCreateFailure fired');
+      console.log(event);
+      console.error('Error:', error);
+
+      console.error(`Event Msg ID Prefix: ${eventMsgIDPrefix}-${subscriptionID}`);
+
+      const chatMsg = `Subscription creation failed for ${event.id} @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}${eventSubErrorToString(error)}`;  // ${event._twitchId} -
+      handleStatusEvent(setChatMessages, eventMsgIDPrefix, true, chatMsg, subscriptionID);
+    });
+
+    eventSubListener.onUserSocketConnect((userID) => {
+      console.log('onUserSocketConnect fired for user:', userID);
+      const eventMsgIDPrefix = 'user-socket-connect';
+      const chatMsg = `User ${userID} connected to socket @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}`;
+      handleStatusEvent(setChatMessages, eventMsgIDPrefix, true, chatMsg);
+    });
+
+    eventSubListener.onUserSocketDisconnect((userID, error) => {
+      console.log('onUserSocketDisconnect fired for user:', userID, 'Error:', error);
+      const eventMsgIDPrefix = 'user-socket-disconnect';
+      const chatMsg = `User ${userID} disconnected from socket @ ${new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}${eventSubErrorToString(error)}.`;
+      handleStatusEvent(setChatMessages, eventMsgIDPrefix, true, chatMsg);
+    });
+
+    /* -- EventSub Listener for Channel Events -- */
+
+    eventSubListener.onChannelFollow(channelInfo.id, channelInfo.id, async e => {
+      console.log(`User ${e.userDisplayName} followed channel ${e.broadcasterDisplayName}`);
+  
+      const uniqueId = `channel-follow-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        content: 'Thank you so much!!!!!',
+        userDisplayName: e.userDisplayName,
+        messageType: 'follow',
+        contentParts: [
+          {
+            content: '@' + e.userDisplayName + ' just followed!!!',
+            type: 'follow',
+            originalContent: '',
+          },
+          {
+            content: 'Thank you so much!!!!!',
+            type: 'text',
+            originalContent: '',
+          }
+        ]
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+  
+    eventSubListener.onChannelUpdate(channelInfo.id, e => {
+      console.log(`Channel ${e.broadcasterDisplayName} updated: Title: ${e.streamTitle}, Category: ${e.categoryName}`);
+
+      const uniqueId = `channel-update-${crypto.randomUUID()}`;
+      const newMessage: ChatMessageData = createNewMessage({
+        id: uniqueId,
+        content: `Chat, we're switching it up!!! ${e.categoryName} time!!! Let's have a nice "${e.streamTitle}"`,
+        userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
+        messageType: 'system'
+      });
+      setChatMessages((msgs) => (
+        [newMessage, ...msgs].slice(0, MAX_MESSAGES)
+      ));
+    });
+  
+  }, [eventSubListener, channelInfo]);
 
   useEffect(() => {
     onMessageHandlerRef.current = async (channel: string, user: string, text: string, msg: TwurpleChatMessage) => {
