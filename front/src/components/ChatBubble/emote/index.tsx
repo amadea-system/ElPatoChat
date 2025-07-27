@@ -28,6 +28,8 @@ const Emote = ({ id, customEmote, scale = 1, alignCorrection } : EmoteProps) => 
   return <EmoteContainer
     $alignCorrection={alignCorrection} 
     src={customEmote?.[`url${scale}x`] ?? getEmoteUrl(id, undefined, undefined, `${scale}.0`)} 
+    alt={`${customEmote?.type || 'Twitch'} Emote: ${customEmote?.code || id}`}
+    title={`${customEmote?.type || 'Twitch'} Emote: ${customEmote?.code || id}`}
   />;
 };
 
