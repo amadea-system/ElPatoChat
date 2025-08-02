@@ -5,10 +5,10 @@ export const createNewMessage = (
   typeOverride?: MessagePart['type']
 ): ChatMessageData => {
 
-  if (!data.contentParts && data.content) {
+  if (!data.contentParts && data.fullMsgText) {
     data.contentParts = [{
-      originalContent: data.content,
-      content: data.content,
+      originalContent: data.fullMsgText,
+      content: data.fullMsgText,
       type: typeOverride || 'text'
     }];
   }
@@ -16,7 +16,7 @@ export const createNewMessage = (
   return {
     effect: 'normal',
     emoteOffsets: new Map(),
-    content: '',
+    fullMsgText: '',
     // displayPronoun: 'they/them',  // Optional
     // color: '#FFFFFF',  // Optional
     badges: [],

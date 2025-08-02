@@ -4,7 +4,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '5f7b389d-9284-4f97-8a1b-28c57d910a7d',
     'effect': 'normal',
-    'content': 'yeifuvTelapuso',
+    'fullMsgText': 'yeifuvTelapuso',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -31,7 +31,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': 'c90fbad0-e1d7-4a98-8eb5-4ce1612d9ed1',
     'effect': 'normal',
-    'content': 'pato falta democratización',
+    'fullMsgText': 'pato falta democratización',
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
@@ -67,7 +67,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '913650a6-cf9c-4a59-b587-9685814ece73',
     'effect': 'normal',
-    'content': '@Raupulus patito70Rose',
+    'fullMsgText': '@Raupulus patito70Rose',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -99,7 +99,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '913650a6-cf9c-4a59-b587-9685814ece73',
     'effect': 'normal',
-    'content': '@Raupulus patito70Rose',
+    'fullMsgText': '@Raupulus patito70Rose',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -136,7 +136,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': 'ea08c270-01c2-442e-bf4c-1b4ef8ea5a50',
     'effect': 'normal',
-    'content': 'que va bailando',
+    'fullMsgText': 'que va bailando',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -173,7 +173,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': 'a3a19e2f-7a9a-4d4d-af5e-4656bdd51031',
     'effect': 'normal',
-    'content': 'un patoooo',
+    'fullMsgText': 'un patoooo',
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
@@ -204,7 +204,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '1c0d652a-2448-440f-a341-1bf8413dbbe9',
     'effect': 'normal',
-    'content': '#estoenphpnopasa',
+    'fullMsgText': '#estoenphpnopasa',
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
@@ -230,7 +230,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '897e5ae3-039a-46c8-974b-a30305d33d25',
     'effect': 'normal',
-    'content': 'patito70Peek',
+    'fullMsgText': 'patito70Peek',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -257,7 +257,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '6e472b21-ca9a-4590-997a-d84716b54ee0',
     'effect': 'normal',
-    'content': 'Me está quemando ya el tema de la hidratación ssr en nuxt.....',
+    'fullMsgText': 'Me está quemando ya el tema de la hidratación ssr en nuxt.....',
     'userDisplayName': 'Raupulus',
     'color': '#00FF7F',
     'emoteOffsets': new Map(),
@@ -338,7 +338,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '675be687-c6c6-4d00-b617-379c57790f67',
     'effect': 'normal',
-    'content': 'bom dia',
+    'fullMsgText': 'bom dia',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',
@@ -370,7 +370,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '0c63fc92-ca74-4a4c-890a-4f4f34210b82',
     'effect': 'normal',
-    'content': 'No recuerdo si ya llegue a 50 la vez pasada',
+    'fullMsgText': 'No recuerdo si ya llegue a 50 la vez pasada',
     'userDisplayName': 'ckmu32',
     'displayPronoun': 'She/Her',
     'color': '#CF7DCF',
@@ -438,7 +438,7 @@ export const SampleMessages: Array<ChatMessageData> = [
   {
     'id': '6cb5af1d-0c27-4a9c-afc8-38bf63ca9db8',
     'effect': 'normal',
-    'content': 'A beber',
+    'fullMsgText': 'A beber',
     'userDisplayName': 'PatitoDev',
     'displayPronoun': 'Any',
     'color': '#F9C8E0',

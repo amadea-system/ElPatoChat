@@ -96,7 +96,7 @@ const handleStatusEvent = (
 
   const newMessage: ChatMessageData = createNewMessage({
     id: uniqueId,
-    content: finalContent,
+    fullMsgText: finalContent,
     userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
     messageType: 'system',
   });
@@ -376,7 +376,7 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
       const uniqueId = `channel-follow-${crypto.randomUUID()}`;
       const newMessage: ChatMessageData = createNewMessage({
         id: uniqueId,
-        content: 'Thank you so much!!!!!',
+        fullMsgText: 'Thank you so much!!!!!',
         userDisplayName: e.userDisplayName,
         messageType: 'follow',
         contentParts: [
@@ -403,7 +403,7 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
       const uniqueId = `channel-update-${crypto.randomUUID()}`;
       const newMessage: ChatMessageData = createNewMessage({
         id: uniqueId,
-        content: `Chat, we're switching it up!!! ${e.categoryName} time!!! Let's have a nice "${e.streamTitle}"`,
+        fullMsgText: `Chat, we're switching it up!!! ${e.categoryName} time!!! Let's have a nice "${e.streamTitle}"`,
         userDisplayName: 'Hibiki The Chat',  // TODO: Don't hardcode the System Message Username
         messageType: 'system'
       });
@@ -425,7 +425,7 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
       const newMessage: ChatMessageData = {
         id: msg.id,
         effect,
-        content: msg.text,
+        fullMsgText: msg.text,
         userDisplayName: msg.userInfo.displayName,
         displayPronoun: pronoun,
         color: msg.userInfo.color,
@@ -438,7 +438,7 @@ export const useTwitchChat = (channelInfo: UserInformation) => {
       if (configuration.isTTSEnabled) {
         ttsSpeak({
           parts: msgParts,
-          content: newMessage.content,
+          content: newMessage.fullMsgText,
           id: newMessage.id,
           sentBy: newMessage.userDisplayName
         });

@@ -26,7 +26,7 @@ const messageContents:Array<string> = [
 export const testMessages = messageContents.map((content, index) => (
   {
     badges: [],
-    content,
+    fullMsgText: content,
     id: `${index}`,
     effect: 'normal',
     emoteOffsets: new Map(),
